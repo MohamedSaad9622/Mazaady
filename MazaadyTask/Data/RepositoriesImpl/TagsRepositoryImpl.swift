@@ -31,7 +31,6 @@ class TagsRepositoryImpl: TagsRepository {
                 .handleEvents(receiveOutput: { [weak self] tags in
                     self?.localDataSource.saveTags(tags)
                 })
-                .prepend(cachedPublisher) // Show cached data immediately, then live data.
                 .eraseToAnyPublisher()
         } else {
             return cachedPublisher

@@ -41,6 +41,12 @@ class ProfileViewModel {
         
     }
 
+    func loadData() {
+        loadProfile()
+        loadProducts()
+        loadTags()
+        loadAdvertisements()
+    }
     
     func loadProfile() {
         fetchProfileUseCase.execute()
@@ -78,7 +84,7 @@ class ProfileViewModel {
             .store(in: &cancellables)
     }
     
-    func loadTAgs() {
+    func loadTags() {
         fetchTagsUseCase.execute()
             .sink { [weak self] completion in
                 if case .failure(let error) = completion {

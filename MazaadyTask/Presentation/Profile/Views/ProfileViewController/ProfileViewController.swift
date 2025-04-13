@@ -9,7 +9,7 @@
 import UIKit
 import Combine
 
-// MARK: - Section Enum
+// MARK: - Section & Item Definitions
 
 enum ProfileSection: Int, CaseIterable {
     case userData
@@ -61,18 +61,36 @@ class ProfileViewController: UIViewController {
         bindViewModel()
         
         // Load data
-        viewModel.loadProfile()
-        viewModel.loadProducts()
-        viewModel.loadAdvertisements()
-        viewModel.loadTAgs()
+        viewModel.loadData()
     }
+    
+    // MARK: - Combine Bindings
+
+    private func bindViewModel() {
+        
+        viewModel.$userData
+            .combineLatest(viewModel.$products, viewModel.$advertisements, viewModel.$tags)
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] (_, _, _, _) in
+                self?.updateSnapshot()
+            }
+            .store(in: &cancellables)
+        
+        viewModel.$errorMessage
+            .compactMap { $0 }
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] error in
+                self?.showErrorAlert(message: error)
+            }
+            .store(in: &cancellables)
+    }
+    
 
     // MARK: - CollectionView Setup
 
     private func setupCollectionView() {
         collectionView = UICollectionView(frame: .zero, collectionViewLayout: createCompositionalLayout())
         collectionView.backgroundColor = .secondarySystemBackground
-//        collectionView.dataSource = self
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         
         view.addSubview(collectionView)
@@ -84,7 +102,10 @@ class ProfileViewController: UIViewController {
             collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
         
-        // Register cells
+        registerCells()
+    }
+    
+    func registerCells() {
         collectionView.register(UINib(nibName: "ProfileCell", bundle: nil),
                                  forCellWithReuseIdentifier: "ProfileCell")
         collectionView.register(TagCollectionCell.self, forCellWithReuseIdentifier: TagCollectionCell.reuseIdentifier)
@@ -99,7 +120,6 @@ class ProfileViewController: UIViewController {
         collectionView.register(SearchBarView.self,
                                 forSupplementaryViewOfKind: "searchBarView",
                                 withReuseIdentifier: SearchBarView.reuseIdentifier)
- 
     }
     
     // MARK: - Diffable Data Source Configuration
@@ -108,23 +128,23 @@ class ProfileViewController: UIViewController {
         dataSource = UICollectionViewDiffableDataSource<ProfileSection, ProfileItem>(collectionView: collectionView) { (collectionView, indexPath, item) -> UICollectionViewCell? in
             
             guard ProfileSection(rawValue: indexPath.section) != nil else { return nil }
-
+            
             switch item {
             case .user(let userData):
                 guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ProfileCell", for: indexPath) as? ProfileCell else { return nil }
                 cell.configCell(with: userData)
                 return cell
-
+                
             case .product(let product):
                 guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ProductCell", for: indexPath) as? ProductCell else { return nil }
                 cell.configCell(with: product)
                 return cell
-
+                
             case .advertisement(let ad):
                 guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "AdsCollectionViewCell", for: indexPath) as? AdsCollectionViewCell else { return nil }
                 cell.configure(with: ad)
                 return cell
-
+                
             case .tag(let tag):
                 guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "TagCollectionCell", for: indexPath) as? TagCollectionCell else { return nil }
                 cell.configure(with: tag)
@@ -135,7 +155,11 @@ class ProfileViewController: UIViewController {
             }
         }
         
-        // Set up the supplementary view provider to return the segmented control for the userData section
+        setupSupplementaryViewProvider()
+    }
+    
+    func setupSupplementaryViewProvider() {
+
         dataSource.supplementaryViewProvider = { [weak self] (collectionView, kind, indexPath) -> UICollectionReusableView? in
             guard let section = ProfileSection(rawValue: indexPath.section) else { return nil }
 
@@ -165,9 +189,6 @@ class ProfileViewController: UIViewController {
 
     }
 
-    
-    
-    // Update diffable snapshot based on ViewModel published properties.
     private func updateSnapshot() {
         var snapshot = NSDiffableDataSourceSnapshot<ProfileSection, ProfileItem>()
         snapshot.appendSections(ProfileSection.allCases)
@@ -183,29 +204,6 @@ class ProfileViewController: UIViewController {
         dataSource.apply(snapshot, animatingDifferences: true)
     }
     
-    // MARK: - Combine Bindings
-
-    private func bindViewModel() {
-        
-        // We update the snapshot any time any of the published properties change.
-        viewModel.$userData
-            .combineLatest(viewModel.$products, viewModel.$advertisements, viewModel.$tags)
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] (_, _, _, _) in
-                self?.updateSnapshot()
-            }
-            .store(in: &cancellables)
-        
-        // Subscribe to errors
-        viewModel.$errorMessage
-            .compactMap { $0 }
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] error in
-                self?.showErrorAlert(message: error)
-            }
-            .store(in: &cancellables)
-    }
-    
     private func showErrorAlert(message: String) {
         let alert = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
         alert.addAction(.init(title: "OK", style: .default))
@@ -213,8 +211,6 @@ class ProfileViewController: UIViewController {
     }
 
 }
-
-// MARK: - UICollectionViewDataSource
 
 
 extension ProfileViewController {
@@ -307,9 +303,8 @@ extension ProfileViewController {
     }
 
     
-    // 3) Advertisements Section - vertical list of banners (or single item that pages horizontally if you want)
     private func createAdvertisementsSection() -> NSCollectionLayoutSection {
-        // Full width, fixed or estimated height
+
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
                                               heightDimension: .absolute(147))
         let item = NSCollectionLayoutItem(layoutSize: itemSize)

@@ -29,7 +29,6 @@ class ProductRepositoryImpl: ProductRepository {
                 .handleEvents(receiveOutput: { [weak self] products in
                     self?.localDataSource.saveProducts(products)
                 })
-                .prepend(cachedPublisher) // Show cached data immediately, then live data.
                 .eraseToAnyPublisher()
         } else {
             return cachedPublisher

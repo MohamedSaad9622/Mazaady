@@ -21,6 +21,7 @@ extension UIColor {
     static var appMainTextColorForLightTheme = #colorLiteral(red: 0.1058823529, green: 0.1058823529, blue: 0.1098039216, alpha: 1) //#1B1B1C
     static var appMainTextColorForDarkTheme = #colorLiteral(red: 0.8784313798, green: 0.8784313798, blue: 0.8784313798, alpha: 1) //#E0E0E0
     static var appSecondaryBackgroundColor =  #colorLiteral(red: 0.9664588571, green: 0.956530869, blue: 0.9610145688, alpha: 1) //#F6F4F5
+    static var appBoarderColor =  #colorLiteral(red: 0.8784313725, green: 0.8784313725, blue: 0.8784313725, alpha: 1) //#E0E0E0
     
     static var appMainColor: UIColor {
         return UIColor { (traits) -> UIColor in

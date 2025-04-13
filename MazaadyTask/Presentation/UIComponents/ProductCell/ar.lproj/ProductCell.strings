@@ -1,0 +1,31 @@
+
+/* Class = "UILabel"; text = "Offer Price"; ObjectID = "6Qq-5N-bfH"; */
+"6Qq-5N-bfH.text" = "سعر العرض"; // :contentReference[oaicite:0]{index=0}
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "6TZ-Aa-Jk7"; */
+"6TZ-Aa-Jk7.text" = "Label"; // :contentReference[oaicite:1]{index=1}
+
+/* Class = "UILabel"; text = "Lot starts in"; ObjectID = "6hV-fW-jpY"; */
+"6hV-fW-jpY.text" = "يبدأ المزاد خلال";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "GAl-tM-u9h"; */
+"GAl-tM-u9h.text" = "Label"; // :contentReference[oaicite:2]{index=2}
+
+/* Class = "UILabel"; text = "H"; ObjectID = "LEc-9X-8Q6"; */
+"LEc-9X-8Q6.text" = "س";  // Hours = ساعات (abbrev.)
+
+/* Class = "UILabel"; text = "D"; ObjectID = "N3Y-io-4Kg"; */
+"N3Y-io-4Kg.text" = "ي";  // Days = أيام (abbrev.)
+
+/* Class = "UILabel"; text = "M"; ObjectID = "e7N-XU-5g3"; */
+"e7N-XU-5g3.text" = "د";  // Minutes = دقائق (abbrev.)
+
+/* Class = "UILabel"; text = "Price"; ObjectID = "fww-dS-2UA"; */
+"fww-dS-2UA.text" = "Label"; // :contentReference[oaicite:3]{index=3}
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "hz2-CO-IDt"; */
+"hz2-CO-IDt.text" = "Label"; // :contentReference[oaicite:4]{index=4}
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "rLL-hv-JLm"; */
+"rLL-hv-JLm.text" = "Label"; // :contentReference[oaicite:5]{index=5}
+

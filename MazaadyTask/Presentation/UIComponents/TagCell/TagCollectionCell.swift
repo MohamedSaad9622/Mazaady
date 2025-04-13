@@ -28,7 +28,7 @@ class TagCollectionCell: UICollectionViewCell {
         contentView.layer.cornerRadius = 8
         contentView.addSubview(tagLabel)
         contentView.layer.borderWidth = 1
-        contentView.layer.borderColor = UIColor.appSecondaryTextColorForDarkTheme.cgColor
+        contentView.layer.borderColor = UIColor.appBoarderColor.cgColor
         
         NSLayoutConstraint.activate([
             tagLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 4),
@@ -47,7 +47,7 @@ class TagCollectionCell: UICollectionViewCell {
             } else {
                 contentView.backgroundColor = .appMainBackgroundColor
                 tagLabel.textColor = .appMainTextColor
-                contentView.layer.borderColor = UIColor.appSecondaryTextColorForLightTheme.cgColor
+                contentView.layer.borderColor = UIColor.appBoarderColor.cgColor
             }
         }
     }

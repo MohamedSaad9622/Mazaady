@@ -75,6 +75,7 @@ class ProductCell: UICollectionViewCell {
             offerPriceView.isHidden = false
             oldPriceLabel.text = "\(product.price ?? 0) \(currency)"
             offerLabel.text = "\(offer) \(currency)"
+            oldPriceLabel.setStrikethroughText(oldPriceLabel.text ?? "", color: .systemRed)
         } else {
             offerPriceView.isHidden = true
         }

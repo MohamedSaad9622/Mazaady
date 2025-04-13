@@ -51,6 +51,7 @@ class APIClient {
 
                 guard (200...299).contains(response.statusCode) else {
                     let errorMessage = String(data: output.data, encoding: .utf8) ?? "No message"
+                    print("responsestatus \(response.statusCode)")
                     throw NetworkError.serverError(statusCode: response.statusCode, message: errorMessage)
                 }
 

@@ -8,44 +8,6 @@
 import UIKit
 
 
-//class MainTabBarController: UITabBarController {
-//
-//    override func viewDidLoad() {
-//        super.viewDidLoad()
-//        setupTabs()
-//    }
-//    
-//    private func setupTabs() {
-//        // Create your view controllers for each tab.
-//        
-//        // For demonstration, we create three simple view controllers.
-//        let homeVC = UIViewController()
-//        homeVC.view.backgroundColor = .white
-//        homeVC.tabBarItem = UITabBarItem(title: "Home",
-//                                         image: UIImage(systemName: "house"),
-//                                         tag: 0)
-//        
-//        let searchVC = UIViewController()
-//        searchVC.view.backgroundColor = .white
-//        searchVC.tabBarItem = UITabBarItem(title: "Search",
-//                                           image: UIImage(systemName: "magnifyingglass"),
-//                                           tag: 1)
-//        
-//        let profileVC = ProfileViewController(viewModel: DependencyContainer.shared.makeProductUseCases())
-//        profileVC.tabBarItem = UITabBarItem(title: "Profile",
-//                                            image: UIImage(systemName: "person"),
-//                                            tag: 2)
-//        
-//        // Assign the view controllers to the tab bar controller.
-//        self.viewControllers = [homeVC, searchVC, profileVC]
-//        
-//        // Set the default selected index.
-//        // For example, if you want to show the Profile tab by default:
-//        self.selectedIndex = 2
-//    }
-//    
-//}
-
 class MainTabBarController: UITabBarController {
 
     private let middleButton = UIButton()
@@ -67,9 +29,10 @@ class MainTabBarController: UITabBarController {
         searchVC.tabBarItem = UITabBarItem(title: "Search", image: UIImage(systemName: "magnifyingglass"), tag: 1)
         shopVC.tabBarItem = UITabBarItem(title: "", image: nil, tag: 2)
         cartVC.tabBarItem = UITabBarItem(title: "Cart", image: UIImage(named: "tab_bar_cart"), tag: 3)
-        profileVC.tabBarItem = UITabBarItem(title: "Profile", image: UIImage(named: "tab_bar_user"), tag: 3)
+        profileVC.tabBarItem = UITabBarItem(title: "Profile", image: UIImage(named: "tab_bar_user"), tag: 4)
 
         self.setViewControllers([homeVC, searchVC, shopVC, cartVC, profileVC], animated: false)
+        selectedIndex = 4
     }
 
     private func setupMiddleButton() {

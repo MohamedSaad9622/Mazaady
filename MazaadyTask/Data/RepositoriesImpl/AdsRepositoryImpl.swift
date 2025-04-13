@@ -29,7 +29,6 @@ class AdsRepositoryImpl: AdsRepository {
                 .handleEvents(receiveOutput: { [weak self] ads in
                     self?.localDataSource.saveAds(ads)
                 })
-                .prepend(cachedPublisher) // Show cached data immediately, then live data.
                 .eraseToAnyPublisher()
         } else {
             return cachedPublisher

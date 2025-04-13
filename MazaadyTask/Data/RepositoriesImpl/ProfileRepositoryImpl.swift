@@ -28,7 +28,6 @@ class ProfileRepositoryImpl: ProfileRepository {
                 .handleEvents(receiveOutput: { [weak self] profile in
                     self?.localDataSource.saveProfile(profile)
                 })
-                .prepend(cachedPublisher) // Show cached data immediately, then live data.
                 .eraseToAnyPublisher()
         } else {
             return cachedPublisher
