@@ -38,7 +38,9 @@ class ProfileViewModel {
         self.searchProductsUseCase = searchProductsUseCase
         self.fetchAdsUseCase = fetchAdsUseCase
         self.fetchTagsUseCase = fetchTagsUseCase
+        
     }
+
     
     func loadProfile() {
         fetchProfileUseCase.execute()

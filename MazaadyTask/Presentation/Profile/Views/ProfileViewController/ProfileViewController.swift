@@ -287,7 +287,7 @@ extension ProfileViewController {
                     if product.offer != nil  {
                         height += 36
                     }
-                    if product.countdownComponents != nil {
+                    if product.endDate != nil {
                         height += 65
                     }
                     return height
